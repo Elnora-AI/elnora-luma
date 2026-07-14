@@ -5,7 +5,7 @@
  * the user config file with 0600 permissions. `auth status` reports where each
  * credential resolved from (masked) and verifies the key against the API.
  */
-import { chmodSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { Command } from "commander";
 import { callLuma } from "./client.js";
@@ -19,7 +19,14 @@ function mask(value: string): string {
 }
 
 function upsertEnvFile(filePath: string, updates: Record<string, string>): void {
-  const lines = existsSync(filePath) ? readFileSync(filePath, "utf8").split("\n") : [];
+  // Read-with-catch instead of exists-then-read: no TOCTOU window.
+  let existing = "";
+  try {
+    existing = readFileSync(filePath, "utf8");
+  } catch {
+    // File doesn't exist yet — start fresh.
+  }
+  const lines = existing ? existing.split("\n") : [];
   const pending = { ...updates };
   const out = lines.map((line) => {
     const eqIndex = line.indexOf("=");
