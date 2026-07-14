@@ -1,0 +1,27 @@
+# Node.js
+node_modules/
+*.tgz
+*.tsbuildinfo
+
+# NOTE: dist/ is deliberately COMMITTED. The Claude Code plugin runs the
+# self-contained bundle at dist/main.js with zero install steps; CI fails if
+# dist/ drifts from a clean rebuild of src/.
+
+# Environment files — credentials never enter this repo
+.env
+.env.local
+.env.*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Coverage
+coverage/
+
+# Logs
+*.log

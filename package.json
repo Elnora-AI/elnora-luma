@@ -1,0 +1,66 @@
+{
+  "name": "@elnora-ai/luma",
+  "version": "0.1.0",
+  "description": "The entire Luma (lu.ma) API as a CLI and a Claude Code plugin — 61 endpoints driven by Luma's own OpenAPI spec, plus hard-won safety guardrails for guest, ticket, and email operations",
+  "type": "module",
+  "bin": {
+    "elnora-luma": "bin/luma.js"
+  },
+  "main": "dist/main.js",
+  "files": [
+    "bin/",
+    "dist/",
+    "skills/",
+    ".claude-plugin/",
+    "AGENTS.md",
+    "INSTALL_FOR_AGENTS.md",
+    "README.md",
+    "SAFETY.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "esbuild src/main.ts --bundle --platform=node --format=esm --target=node20 --outfile=dist/main.js --banner:js=\"import { createRequire as __cr } from 'node:module'; const require = __cr(import.meta.url);\" --log-level=warning && node -e \"require('fs').cpSync('src/spec','dist/spec',{recursive:true})\"",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "verify": "npm run typecheck && npm run build && npm test && git add -A dist && git diff --cached --exit-code -- dist"
+  },
+  "keywords": [
+    "luma",
+    "lu.ma",
+    "events",
+    "calendar",
+    "rsvp",
+    "tickets",
+    "cli",
+    "claude-code",
+    "claude-code-plugin",
+    "agent",
+    "openapi"
+  ],
+  "author": "Elnora AI <opensource@elnora.ai>",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Elnora-AI/elnora-luma"
+  },
+  "bugs": {
+    "url": "https://github.com/Elnora-AI/elnora-luma/issues"
+  },
+  "homepage": "https://github.com/Elnora-AI/elnora-luma",
+  "dependencies": {
+    "commander": "^14.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^25.7.0",
+    "esbuild": "^0.27.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.6"
+  }
+}

@@ -1,0 +1,6 @@
+# gitleaks config for elnora-luma.
+# Extends the built-in ruleset. No allowlist entries: Luma's upstream OpenAPI
+# spec (src/spec/openapi.json, mirrored in dist/spec/) contains no example
+# credentials, and no other path in this repo may legitimately hold a secret.
+[extend]
+useDefault = true

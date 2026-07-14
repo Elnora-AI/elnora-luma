@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint-and-test:
+    name: Typecheck & Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "20"
+          cache: "npm"
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run build
+      - run: npm test
+      - name: Bundle freshness — committed dist/ must match a clean rebuild
+        # `git add -A` first so newly created (untracked) files under dist/ also fail the gate.
+        run: git add -A dist && git diff --cached --exit-code -- dist
+
+  zero-install:
+    name: Zero-install smoke (${{ matrix.os }})
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "20"
+      # Deliberately NO npm install — the committed bundle must run as-is,
+      # exactly like a fresh `claude plugin install luma@elnora-luma`.
+      - run: node bin/luma.js --version
+      - run: node bin/luma.js --help
+      - run: node bin/luma.js event --help
+      - run: node bin/luma.js calendar --help

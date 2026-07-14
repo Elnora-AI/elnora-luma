@@ -1,0 +1,20 @@
+{
+  "name": "luma",
+  "version": "0.1.0",
+  "description": "Luma (lu.ma) event ops for Claude Code — all 61 public API endpoints via a spec-driven CLI, plus 9 skills with safety guardrails for guests, ticketing, calendars, and webhooks.",
+  "author": {
+    "name": "Elnora AI",
+    "email": "opensource@elnora.ai",
+    "url": "https://github.com/Elnora-AI"
+  },
+  "homepage": "https://github.com/Elnora-AI/elnora-luma",
+  "repository": "https://github.com/Elnora-AI/elnora-luma",
+  "license": "Apache-2.0",
+  "keywords": [
+    "luma",
+    "events",
+    "calendar",
+    "tickets",
+    "rsvp"
+  ]
+}
