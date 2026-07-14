@@ -55,7 +55,7 @@
   },
   "homepage": "https://github.com/Elnora-AI/elnora-luma",
   "dependencies": {
-    "commander": "^14.0.3"
+    "commander": "^15.0.0"
   },
   "devDependencies": {
     "@types/node": "^25.7.0",
