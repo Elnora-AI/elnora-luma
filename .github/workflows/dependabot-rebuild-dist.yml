@@ -27,7 +27,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
           # RELEASE_BOT_PAT so the push retriggers CI (GITHUB_TOKEN pushes don't).
           token: ${{ secrets.RELEASE_BOT_PAT }}
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: "20"
           cache: "npm"
