@@ -3890,7 +3890,7 @@ function registerAdminCommands(eventGroup) {
 }
 
 // src/auth.ts
-import { chmodSync, existsSync as existsSync2, mkdirSync, readFileSync as readFileSync5, writeFileSync as writeFileSync2 } from "node:fs";
+import { chmodSync, mkdirSync, readFileSync as readFileSync5, writeFileSync as writeFileSync2 } from "node:fs";
 import { join as join2 } from "node:path";
 
 // src/env.ts
@@ -3942,7 +3942,12 @@ function mask(value) {
   return value.length <= 4 ? "****" : `****${value.slice(-4)}`;
 }
 function upsertEnvFile(filePath, updates) {
-  const lines = existsSync2(filePath) ? readFileSync5(filePath, "utf8").split("\n") : [];
+  let existing = "";
+  try {
+    existing = readFileSync5(filePath, "utf8");
+  } catch {
+  }
+  const lines = existing ? existing.split("\n") : [];
   const pending = { ...updates };
   const out = lines.map((line) => {
     const eqIndex = line.indexOf("=");
