@@ -54,7 +54,8 @@ export function registerAuthCommands(program: Command): void {
     .description(`Save LUMA_API_KEY to ${join(configDir(), ".env")} (created with 0600 permissions)`)
     .argument("<api-key>", `Luma API key — generate at ${KEY_URL} (requires Luma Plus)`)
     .option("--session-key <value>", "Also store LUMA_AUTH_SESSION_KEY (only needed for `event` admin commands; it expires)")
-    .action((apiKey: string, opts: { sessionKey?: string }) => {
+    .option("--stripe-key <value>", "Also store STRIPE_API_KEY (only needed for `stripe reconcile`; use a RESTRICTED read-only rk_ key)")
+    .action((apiKey: string, opts: { sessionKey?: string; stripeKey?: string }) => {
       const key = apiKey.trim();
       if (!key) throw new Error("API key is empty.");
       const dir = configDir();
@@ -62,6 +63,7 @@ export function registerAuthCommands(program: Command): void {
       const filePath = join(dir, ".env");
       const updates: Record<string, string> = { LUMA_API_KEY: key };
       if (opts.sessionKey?.trim()) updates.LUMA_AUTH_SESSION_KEY = opts.sessionKey.trim();
+      if (opts.stripeKey?.trim()) updates.STRIPE_API_KEY = opts.stripeKey.trim();
       upsertEnvFile(filePath, updates);
       process.stderr.write(`Saved LUMA_API_KEY (${mask(key)}) to ${filePath}\n`);
       process.stderr.write("Verify with: luma auth status\n");
@@ -85,6 +87,12 @@ export function registerAuthCommands(program: Command): void {
         session
           ? `LUMA_AUTH_SESSION_KEY: ${mask(session)} (source: ${envSources.LUMA_AUTH_SESSION_KEY ?? "environment"})\n`
           : "LUMA_AUTH_SESSION_KEY: not set (only needed for `event` admin commands)\n",
+      );
+      const stripe = process.env.STRIPE_API_KEY;
+      process.stderr.write(
+        stripe
+          ? `STRIPE_API_KEY: ${mask(stripe)} (source: ${envSources.STRIPE_API_KEY ?? "environment"})${stripe.startsWith("rk_") ? "" : " ⚠ not a restricted rk_ key — reconcile only needs read access"}\n`
+          : "STRIPE_API_KEY: not set (only needed for `stripe reconcile`)\n",
       );
       const me = await callLuma({ apiKey: key, method: "GET", path: "/v1/user/get-self" });
       printResult(me, !!opts.raw);

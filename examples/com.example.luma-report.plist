@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  macOS launchd: weekday 08:15 Luma digest (see examples/luma-digest.sh).
+  Install:
+    1. Replace /path/to, /Users/you, and evt-XXXX below (launchd does not
+       expand ~; the digest contains attendee PII, so keep the log under your
+       home directory, never in shared /tmp).
+    2. cp com.example.luma-report.plist ~/Library/LaunchAgents/
+    3. launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.example.luma-report.plist
+  Pause without uninstalling:
+    launchctl bootout gui/$(id -u)/com.example.luma-report
+  The digest lands in the log file; point StandardOutPath at a mail wrapper if
+  you want it delivered. Keys are NOT stored here - the CLI reads
+  ~/.config/elnora-luma/.env (chmod 600).
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.example.luma-report</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/path/to/examples/luma-digest.sh</string>
+        <string>evt-XXXX</string>
+    </array>
+    <key>StartCalendarInterval</key>
+    <array>
+        <dict><key>Weekday</key><integer>1</integer><key>Hour</key><integer>8</integer><key>Minute</key><integer>15</integer></dict>
+        <dict><key>Weekday</key><integer>2</integer><key>Hour</key><integer>8</integer><key>Minute</key><integer>15</integer></dict>
+        <dict><key>Weekday</key><integer>3</integer><key>Hour</key><integer>8</integer><key>Minute</key><integer>15</integer></dict>
+        <dict><key>Weekday</key><integer>4</integer><key>Hour</key><integer>8</integer><key>Minute</key><integer>15</integer></dict>
+        <dict><key>Weekday</key><integer>5</integer><key>Hour</key><integer>8</integer><key>Minute</key><integer>15</integer></dict>
+    </array>
+    <key>StandardOutPath</key>
+    <string>/Users/you/Library/Logs/luma-report.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/you/Library/Logs/luma-report-error.log</string>
+</dict>
+</plist>

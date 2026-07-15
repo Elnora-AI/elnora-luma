@@ -84,3 +84,14 @@ you accidentally blast-email real guests.
 Calendar keys: 200 req/min. Org keys: 500 req/min. The CLI auto-retries
 429/5xx with `Retry-After` backoff (max 3 attempts) on the public API. Bulk
 guest mutations must still be serial — see the skills for the exact recipe.
+
+## Automations are Read-tier by design
+
+The `report` and `stripe` command groups never mutate Luma or Stripe and never
+email anyone — that is what makes them safe for unattended schedules. Never
+wire a scheduler to Write/Send/Destroy operations (auto-approve, auto-decline,
+auto-invite): the approval queue in a digest is information for a human, not a
+work order for a bot. The Stripe client is GET-only by construction; use a
+restricted read-only key (`rk_...`) anyway, and never run the session-cookie
+admin commands unattended — the cookie expires. Report and roster outputs
+contain attendee PII: keep scheduled artifacts in private storage.

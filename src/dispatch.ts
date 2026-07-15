@@ -27,7 +27,7 @@ function readBodyArg(arg: string): unknown {
   }
 }
 
-function getApiKey(): string {
+export function getApiKey(): string {
   const key = process.env.LUMA_API_KEY;
   if (!key || key === "your-luma-api-key") {
     throw new Error(

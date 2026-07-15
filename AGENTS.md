@@ -28,6 +28,11 @@ Keys are calendar-scoped: one key = one calendar. For a guided install, see [`IN
 | Create / update an event | `elnora-luma event create --name … --start-at … --timezone …` · `event update --event-id … --suppress-notifications true` |
 | Ticket types / coupons | `elnora-luma event ticket-types-list --event-id …` · `event create-coupon …` |
 | Webhooks | `elnora-luma webhooks list` / `create` / `update` / `delete` |
+| Revenue / sales summary | `elnora-luma report sales --event-id evt-XXXX --format md` (`--calendar --after … --before …` for the whole calendar) |
+| Accounting / CRM export | `elnora-luma report roster --event-id evt-XXXX --out roster.csv` (`--format json` for the diff input) |
+| What changed since last run | `elnora-luma report diff yesterday.json today.json` (md prints nothing when unchanged) |
+| Sellout / approval-queue alert | `elnora-luma report check --event-id evt-XXXX` (exit 3 = warnings) |
+| Stripe payment cross-check | `elnora-luma stripe reconcile --event-id evt-XXXX --check` (needs restricted read-only `STRIPE_API_KEY`) |
 | Anything else | `elnora-luma` → resources, `elnora-luma <resource>` → actions, `… <action> --help` → flags |
 
 Every command supports `--raw` (compact JSON), `--all` (auto-paginate), `--search <term>` (client-side filter), `--body <json|@file|->` (nested POST bodies).
