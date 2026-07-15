@@ -4,7 +4,7 @@ version: 1.0.0
 description: >
   Luma API CLI — every endpoint at public-api.luma.com (61 actions across events, guests, ticket types, coupons, hosts, tags, memberships, webhooks, organizations).
   Match ONLY when the user explicitly says "luma" / "lu.ma" / "luma.com" — never on bare "event", "RSVP", "guest list", "webhook", "ticket type", "coupon", "tag", or "membership" alone, since those are claimed by other tools (Calendar, Stripe, Slack, Vanta, etc.).
-  TRIGGERS (all Luma-bound, none generic): "luma", "lu.ma", "luma.com", "luma event", "luma events", "luma calendar", "luma rsvp", "luma rsvps", "luma guests", "guests on luma", "guest list on luma", "registrations on luma", "approve luma guests", "luma ticket", "luma tickets", "luma ticket type", "luma ticket types", "luma coupon", "luma coupons", "luma webhook", "luma webhooks", "luma host", "luma hosts", "luma membership", "luma memberships", "luma tier", "luma tiers", "luma tag", "luma tags", "luma person tag", "luma event tag", "luma organization", "luma api", "luma openapi", "create event on luma", "create luma event", "edit luma event", "update luma event", "cancel luma event", "add guests to luma", "send luma invites", "import people to luma", "import people on luma", "post to luma", "publish on luma", "publish to luma", "list events on luma", "hackathon on luma", "workshop on luma".
+  TRIGGERS (all Luma-bound, none generic): "luma", "lu.ma", "luma.com", "luma event", "luma events", "luma calendar", "luma rsvp", "luma rsvps", "luma guests", "guests on luma", "guest list on luma", "registrations on luma", "approve luma guests", "luma ticket", "luma tickets", "luma ticket type", "luma ticket types", "luma coupon", "luma coupons", "luma webhook", "luma webhooks", "luma host", "luma hosts", "luma membership", "luma memberships", "luma tier", "luma tiers", "luma tag", "luma tags", "luma person tag", "luma event tag", "luma organization", "luma api", "luma openapi", "create event on luma", "create luma event", "edit luma event", "update luma event", "cancel luma event", "add guests to luma", "send luma invites", "import people to luma", "import people on luma", "post to luma", "publish on luma", "publish to luma", "list events on luma", "hackathon on luma", "workshop on luma", "luma report", "luma sales report", "luma revenue", "luma digest", "luma automation", "scheduled luma report", "export luma guests", "luma roster", "reconcile luma", "luma stripe reconcile".
 ---
 
 # Luma CLI — Router
@@ -59,6 +59,7 @@ The rate limit is 200 req/min on a calendar key. A naïve parallel-5 batch of 27
 ```
 LUMA_API_KEY=               # secret-... (calendar-scoped; generate at https://luma.com/calendar/manage/api-keys — requires Luma Plus)
 LUMA_AUTH_SESSION_KEY=      # optional; ONLY for `event` admin commands (cookie-session auth, expires)
+STRIPE_API_KEY=             # optional; ONLY for `stripe reconcile` (use a RESTRICTED read-only rk_ key)
 ```
 
 Resolution order: process environment → `$LUMA_CONFIG_DIR/.env` or `~/.config/elnora-luma/.env` → `.env` next to the installed CLI. First-run setup:
@@ -99,6 +100,7 @@ Top-level scalars are also available as individual `--flag` options — `luma <r
 | `memberships` (3) | `luma:memberships` | Paid tier membership operations |
 | `webhooks` (5) + payloads | `luma:webhooks` | Webhook CRUD + every event payload shape |
 | `organizations` (5) | `luma:organizations` | Multi-calendar org ops (admins, list/create calendars, list/transfer events) |
+| `report` (4) + `stripe` (1) | `luma:automation` | Read-only reporting: sales/revenue summaries, roster CSV export, change digests (diff), capacity/queue checks, Luma↔Stripe reconciliation, scheduling recipes |
 
 **Invoke sub-skills via `Skill` tool — don't `Read` the SKILL.md manually.** e.g. `Skill(skill: "luma:event")`.
 

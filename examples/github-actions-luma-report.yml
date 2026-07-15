@@ -1,0 +1,46 @@
+# GitHub Actions: nightly Luma sales report + roster, committed to THIS repo.
+#
+# ⚠ PII WARNING: rosters contain attendee names and emails. Use this workflow
+#   ONLY in a PRIVATE repository. Put keys in Actions secrets, never in the file.
+#
+# Copy into your own (private) repo as .github/workflows/luma-report.yml and
+# set the LUMA_API_KEY secret (plus STRIPE_API_KEY if you add reconcile).
+name: Luma nightly report
+
+on:
+  schedule:
+    - cron: "15 5 * * 1-5" # 05:15 UTC weekdays
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+      - run: npm install -g @elnora-ai/luma
+      - name: Sales report + roster
+        env:
+          LUMA_API_KEY: ${{ secrets.LUMA_API_KEY }}
+        run: |
+          mkdir -p reports
+          elnora-luma report sales --event-id evt-XXXX --format md --out reports/sales.md
+          elnora-luma report roster --event-id evt-XXXX --out reports/roster.csv
+      # Optional Stripe cross-check — uncomment and add the secret:
+      # - name: Reconcile against Stripe
+      #   env:
+      #     LUMA_API_KEY: ${{ secrets.LUMA_API_KEY }}
+      #     STRIPE_API_KEY: ${{ secrets.STRIPE_API_KEY }} # restricted rk_ key
+      #   run: elnora-luma stripe reconcile --event-id evt-XXXX --check --format md --out reports/reconcile.md
+      - name: Commit if changed
+        run: |
+          git config user.name "luma-report-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add reports/
+          git diff --cached --quiet || git commit -m "chore: nightly luma report"
+          git push

@@ -12,6 +12,7 @@ import { printError } from "./output.js";
 import { refreshSpec } from "./client.js";
 import { registerAdminCommands } from "./admin.js";
 import { registerAuthCommands } from "./auth.js";
+import { registerReportCommands, registerStripeCommands } from "./report.js";
 import { loadEnv } from "./env.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -133,6 +134,10 @@ Resources are discovered dynamically from the bundled OpenAPI spec. Run \`luma <
   // Credential setup
   registerAuthCommands(program);
 
+  // Read-only reporting + automation commands (hand-registered, not spec-driven)
+  registerReportCommands(program);
+  registerStripeCommands(program);
+
   // Spec management
   const specGroup = program.command("spec").description("OpenAPI spec utilities");
   specGroup
@@ -188,6 +193,13 @@ Examples:
   echo '{"event_id":"evt-X","guests":[...]}' | luma event add-guests --body -
   luma webhooks list
   luma spec refresh                                 # update the bundled OpenAPI spec
+
+Automation (read-only, cron-safe — see docs/automation.md):
+  luma report sales --event-id evt-XXXX --format md   # revenue summary digest
+  luma report roster --event-id evt-XXXX --out r.csv  # accounting/CRM export
+  luma report diff yesterday.json today.json          # what changed since last run
+  luma report check --event-id evt-XXXX               # capacity/queue warnings (exit 3)
+  luma stripe reconcile --event-id evt-XXXX           # Luma paid guests vs Stripe charges
 `,
   );
 

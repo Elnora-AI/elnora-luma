@@ -65,6 +65,18 @@ luma auth set-key secret-XXXX --session-key <cookie-value>
 
 Re-grab on a 401. Read [SECURITY.md](.github/SECURITY.md) for handling rules.
 
+## Step 6 — (Optional) Stripe reconciliation
+
+`luma stripe reconcile` cross-checks Luma paid guests against the charges Luma created in the user's own connected Stripe
+account. It needs `STRIPE_API_KEY` — have the user create a **restricted, read-only** key (`rk_...`) at
+<https://dashboard.stripe.com/apikeys> (the command only ever issues GETs, but a restricted key caps the blast radius):
+
+```sh
+luma auth set-key secret-XXXX --stripe-key rk_...
+```
+
+Scheduled/unattended recipes (daily digests, nightly reports, alerting exit codes): [docs/automation.md](docs/automation.md).
+
 ## Completion checklist
 
 - [ ] `luma auth status` returns the user's identity

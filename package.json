@@ -12,6 +12,8 @@
     "dist/",
     "skills/",
     ".claude-plugin/",
+    "docs/",
+    "examples/",
     "AGENTS.md",
     "INSTALL_FOR_AGENTS.md",
     "README.md",

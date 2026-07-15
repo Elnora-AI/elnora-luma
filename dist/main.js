@@ -627,8 +627,8 @@ var require_help = __commonJS({
        * @param {string} str
        * @returns {number}
        */
-      displayWidth(str) {
-        return stripColor(str).length;
+      displayWidth(str2) {
+        return stripColor(str2).length;
       }
       /**
        * Style the title for displaying in the help. Called with 'Usage:', 'Options:', etc.
@@ -636,11 +636,11 @@ var require_help = __commonJS({
        * @param {string} str
        * @returns {string}
        */
-      styleTitle(str) {
-        return str;
+      styleTitle(str2) {
+        return str2;
       }
-      styleUsage(str) {
-        return str.split(" ").map((word) => {
+      styleUsage(str2) {
+        return str2.split(" ").map((word) => {
           if (word === "[options]") return this.styleOptionText(word);
           if (word === "[command]") return this.styleSubcommandText(word);
           if (word[0] === "[" || word[0] === "<")
@@ -648,46 +648,46 @@ var require_help = __commonJS({
           return this.styleCommandText(word);
         }).join(" ");
       }
-      styleCommandDescription(str) {
-        return this.styleDescriptionText(str);
+      styleCommandDescription(str2) {
+        return this.styleDescriptionText(str2);
       }
-      styleOptionDescription(str) {
-        return this.styleDescriptionText(str);
+      styleOptionDescription(str2) {
+        return this.styleDescriptionText(str2);
       }
-      styleSubcommandDescription(str) {
-        return this.styleDescriptionText(str);
+      styleSubcommandDescription(str2) {
+        return this.styleDescriptionText(str2);
       }
-      styleArgumentDescription(str) {
-        return this.styleDescriptionText(str);
+      styleArgumentDescription(str2) {
+        return this.styleDescriptionText(str2);
       }
-      styleDescriptionText(str) {
-        return str;
+      styleDescriptionText(str2) {
+        return str2;
       }
-      styleOptionTerm(str) {
-        return this.styleOptionText(str);
+      styleOptionTerm(str2) {
+        return this.styleOptionText(str2);
       }
-      styleSubcommandTerm(str) {
-        return str.split(" ").map((word) => {
+      styleSubcommandTerm(str2) {
+        return str2.split(" ").map((word) => {
           if (word === "[options]") return this.styleOptionText(word);
           if (word[0] === "[" || word[0] === "<")
             return this.styleArgumentText(word);
           return this.styleSubcommandText(word);
         }).join(" ");
       }
-      styleArgumentTerm(str) {
-        return this.styleArgumentText(str);
+      styleArgumentTerm(str2) {
+        return this.styleArgumentText(str2);
       }
-      styleOptionText(str) {
-        return str;
+      styleOptionText(str2) {
+        return str2;
       }
-      styleArgumentText(str) {
-        return str;
+      styleArgumentText(str2) {
+        return str2;
       }
-      styleSubcommandText(str) {
-        return str;
+      styleSubcommandText(str2) {
+        return str2;
       }
-      styleCommandText(str) {
-        return str;
+      styleCommandText(str2) {
+        return str2;
       }
       /**
        * Calculate the pad width from the maximum term length.
@@ -710,8 +710,8 @@ var require_help = __commonJS({
        * @param {string} str
        * @returns {boolean}
        */
-      preformatted(str) {
-        return /\n[^\S\r\n]/.test(str);
+      preformatted(str2) {
+        return /\n[^\S\r\n]/.test(str2);
       }
       /**
        * Format the "item", which consists of a term and description. Pad the term and wrap the description, indenting the following lines.
@@ -757,9 +757,9 @@ ${itemIndentStr}`);
        * @param {number} width
        * @returns {string}
        */
-      boxWrap(str, width) {
-        if (width < this.minWidthToWrap) return str;
-        const rawLines = str.split(/\r\n|\n/);
+      boxWrap(str2, width) {
+        if (width < this.minWidthToWrap) return str2;
+        const rawLines = str2.split(/\r\n|\n/);
         const chunkPattern = /[\s]*[^\s]+/g;
         const wrappedLines = [];
         rawLines.forEach((line) => {
@@ -787,9 +787,9 @@ ${itemIndentStr}`);
         return wrappedLines.join("\n");
       }
     };
-    function stripColor(str) {
+    function stripColor(str2) {
       const sgrPattern = /\x1b\[\d*(;\d*)*m/g;
-      return str.replace(sgrPattern, "");
+      return str2.replace(sgrPattern, "");
     }
     exports.Help = Help2;
     exports.stripColor = stripColor;
@@ -1060,9 +1060,9 @@ var require_option = __commonJS({
         return option.negate === (negativeValue === value);
       }
     };
-    function camelcase(str) {
-      return str.split("-").reduce((str2, word) => {
-        return str2 + word[0].toUpperCase() + word.slice(1);
+    function camelcase(str2) {
+      return str2.split("-").reduce((str3, word) => {
+        return str3 + word[0].toUpperCase() + word.slice(1);
       });
     }
     function splitOptionFlags(flags) {
@@ -1243,14 +1243,14 @@ var require_command = __commonJS({
         this._showSuggestionAfterError = true;
         this._savedState = null;
         this._outputConfiguration = {
-          writeOut: (str) => process2.stdout.write(str),
-          writeErr: (str) => process2.stderr.write(str),
-          outputError: (str, write) => write(str),
+          writeOut: (str2) => process2.stdout.write(str2),
+          writeErr: (str2) => process2.stderr.write(str2),
+          outputError: (str2, write) => write(str2),
           getOutHelpWidth: () => process2.stdout.isTTY ? process2.stdout.columns : void 0,
           getErrHelpWidth: () => process2.stderr.isTTY ? process2.stderr.columns : void 0,
           getOutHasColors: () => useColor() ?? (process2.stdout.isTTY && process2.stdout.hasColors?.()),
           getErrHasColors: () => useColor() ?? (process2.stderr.isTTY && process2.stderr.hasColors?.()),
-          stripColor: (str) => stripColor(str)
+          stripColor: (str2) => stripColor(str2)
         };
         this._hidden = false;
         this._helpOption = void 0;
@@ -2974,18 +2974,18 @@ Expecting one of '${allowedValues.join("', '")}'`);
        * @param {string} [description]
        * @return {(this | string | undefined)} `this` command for chaining, or version string if no arguments
        */
-      version(str, flags, description) {
-        if (str === void 0) return this._version;
-        this._version = str;
+      version(str2, flags, description) {
+        if (str2 === void 0) return this._version;
+        this._version = str2;
         flags = flags || "-V, --version";
         description = description || "output the version number";
         const versionOption = this.createOption(flags, description);
         this._versionOptionName = versionOption.attributeName();
         this._registerOption(versionOption);
         this.on("option:" + versionOption.name(), () => {
-          this._outputConfiguration.writeOut(`${str}
+          this._outputConfiguration.writeOut(`${str2}
 `);
-          this._exit(0, "commander.version", str);
+          this._exit(0, "commander.version", str2);
         });
         return this;
       }
@@ -2996,10 +2996,10 @@ Expecting one of '${allowedValues.join("', '")}'`);
        * @param {object} [argsDescription]
        * @return {(string|Command)}
        */
-      description(str, argsDescription) {
-        if (str === void 0 && argsDescription === void 0)
+      description(str2, argsDescription) {
+        if (str2 === void 0 && argsDescription === void 0)
           return this._description;
-        this._description = str;
+        this._description = str2;
         if (argsDescription) {
           this._argsDescription = argsDescription;
         }
@@ -3011,9 +3011,9 @@ Expecting one of '${allowedValues.join("', '")}'`);
        * @param {string} [str]
        * @return {(string|Command)}
        */
-      summary(str) {
-        if (str === void 0) return this._summary;
-        this._summary = str;
+      summary(str2) {
+        if (str2 === void 0) return this._summary;
+        this._summary = str2;
         return this;
       }
       /**
@@ -3061,8 +3061,8 @@ Expecting one of '${allowedValues.join("', '")}'`);
        * @param {string} [str]
        * @return {(string|Command)}
        */
-      usage(str) {
-        if (str === void 0) {
+      usage(str2) {
+        if (str2 === void 0) {
           if (this._usage) return this._usage;
           const args = this.registeredArguments.map((arg) => {
             return humanReadableArgName(arg);
@@ -3073,7 +3073,7 @@ Expecting one of '${allowedValues.join("', '")}'`);
             this.registeredArguments.length ? args : []
           ).join(" ");
         }
-        this._usage = str;
+        this._usage = str2;
         return this;
       }
       /**
@@ -3082,9 +3082,9 @@ Expecting one of '${allowedValues.join("', '")}'`);
        * @param {string} [str]
        * @return {(string|Command)}
        */
-      name(str) {
-        if (str === void 0) return this._name;
-        this._name = str;
+      name(str2) {
+        if (str2 === void 0) return this._name;
+        this._name = str2;
         return this;
       }
       /**
@@ -3218,17 +3218,17 @@ Expecting one of '${allowedValues.join("', '")}'`);
         let hasColors;
         let helpWidth;
         if (error) {
-          baseWrite = (str) => this._outputConfiguration.writeErr(str);
+          baseWrite = (str2) => this._outputConfiguration.writeErr(str2);
           hasColors = this._outputConfiguration.getErrHasColors();
           helpWidth = this._outputConfiguration.getErrHelpWidth();
         } else {
-          baseWrite = (str) => this._outputConfiguration.writeOut(str);
+          baseWrite = (str2) => this._outputConfiguration.writeOut(str2);
           hasColors = this._outputConfiguration.getOutHasColors();
           helpWidth = this._outputConfiguration.getOutHelpWidth();
         }
-        const write = (str) => {
-          if (!hasColors) str = this._outputConfiguration.stripColor(str);
-          return baseWrite(str);
+        const write = (str2) => {
+          if (!hasColors) str2 = this._outputConfiguration.stripColor(str2);
+          return baseWrite(str2);
         };
         return { error, write, hasColors, helpWidth };
       }
@@ -3475,9 +3475,9 @@ var {
 } = import_index.default;
 
 // src/main.ts
-import { readFileSync as readFileSync6 } from "node:fs";
+import { readFileSync as readFileSync7 } from "node:fs";
 import { fileURLToPath as fileURLToPath3 } from "node:url";
-import { dirname as dirname3, resolve as resolve3 } from "node:path";
+import { dirname as dirname4, resolve as resolve3 } from "node:path";
 
 // src/spec.ts
 import { readFileSync } from "node:fs";
@@ -4004,7 +4004,7 @@ import { existsSync, readFileSync as readFileSync4 } from "node:fs";
 import { homedir } from "node:os";
 import { dirname as dirname2, join, resolve as resolve2 } from "node:path";
 import { fileURLToPath as fileURLToPath2 } from "node:url";
-var ALLOWED_ENV_KEYS = /* @__PURE__ */ new Set(["LUMA_API_KEY", "LUMA_AUTH_SESSION_KEY"]);
+var ALLOWED_ENV_KEYS = /* @__PURE__ */ new Set(["LUMA_API_KEY", "LUMA_AUTH_SESSION_KEY", "STRIPE_API_KEY"]);
 var envSources = {};
 function configDir() {
   const override = process.env.LUMA_CONFIG_DIR?.trim();
@@ -4073,7 +4073,7 @@ function upsertEnvFile(filePath, updates) {
 }
 function registerAuthCommands(program2) {
   const auth = program2.command("auth").description("Credential setup and status");
-  auth.command("set-key").description(`Save LUMA_API_KEY to ${join2(configDir(), ".env")} (created with 0600 permissions)`).argument("<api-key>", `Luma API key \u2014 generate at ${KEY_URL} (requires Luma Plus)`).option("--session-key <value>", "Also store LUMA_AUTH_SESSION_KEY (only needed for `event` admin commands; it expires)").action((apiKey, opts) => {
+  auth.command("set-key").description(`Save LUMA_API_KEY to ${join2(configDir(), ".env")} (created with 0600 permissions)`).argument("<api-key>", `Luma API key \u2014 generate at ${KEY_URL} (requires Luma Plus)`).option("--session-key <value>", "Also store LUMA_AUTH_SESSION_KEY (only needed for `event` admin commands; it expires)").option("--stripe-key <value>", "Also store STRIPE_API_KEY (only needed for `stripe reconcile`; use a RESTRICTED read-only rk_ key)").action((apiKey, opts) => {
     const key = apiKey.trim();
     if (!key) throw new Error("API key is empty.");
     const dir = configDir();
@@ -4081,6 +4081,7 @@ function registerAuthCommands(program2) {
     const filePath = join2(dir, ".env");
     const updates = { LUMA_API_KEY: key };
     if (opts.sessionKey?.trim()) updates.LUMA_AUTH_SESSION_KEY = opts.sessionKey.trim();
+    if (opts.stripeKey?.trim()) updates.STRIPE_API_KEY = opts.stripeKey.trim();
     upsertEnvFile(filePath, updates);
     process.stderr.write(`Saved LUMA_API_KEY (${mask(key)}) to ${filePath}
 `);
@@ -4104,17 +4105,916 @@ Generate a key at ${KEY_URL} (requires Luma Plus), then run:
       session ? `LUMA_AUTH_SESSION_KEY: ${mask(session)} (source: ${envSources.LUMA_AUTH_SESSION_KEY ?? "environment"})
 ` : "LUMA_AUTH_SESSION_KEY: not set (only needed for `event` admin commands)\n"
     );
+    const stripe = process.env.STRIPE_API_KEY;
+    process.stderr.write(
+      stripe ? `STRIPE_API_KEY: ${mask(stripe)} (source: ${envSources.STRIPE_API_KEY ?? "environment"})${stripe.startsWith("rk_") ? "" : " \u26A0 not a restricted rk_ key \u2014 reconcile only needs read access"}
+` : "STRIPE_API_KEY: not set (only needed for `stripe reconcile`)\n"
+    );
     const me = await callLuma({ apiKey: key, method: "GET", path: "/v1/user/get-self" });
     printResult(me, !!opts.raw);
   });
 }
 
+// src/report.ts
+import { readFileSync as readFileSync6, renameSync, writeFileSync as writeFileSync3 } from "node:fs";
+import { dirname as dirname3, join as join3 } from "node:path";
+
+// src/csv.ts
+function csvEscape(value) {
+  if (/[",\n\r]/.test(value)) {
+    return `"${value.replace(/"/g, '""')}"`;
+  }
+  return value;
+}
+var FORMULA_PREFIX = /^[=+\-@\t\r]/;
+var PLAIN_NUMBER = /^-?\d+(\.\d+)?$/;
+function neutralize(value) {
+  return FORMULA_PREFIX.test(value) && !PLAIN_NUMBER.test(value) ? `'${value}` : value;
+}
+function toCsv(header, rows) {
+  const lines = [header.map(csvEscape).join(",")];
+  for (const row of rows) {
+    lines.push(
+      row.map((cell) => {
+        if (cell === null || cell === void 0) return "";
+        if (typeof cell === "number") return String(cell);
+        return csvEscape(neutralize(cell));
+      }).join(",")
+    );
+  }
+  return lines.join("\n") + "\n";
+}
+
+// src/reporting.ts
+var SALES_SCHEMA = "elnora-luma/report-sales@1";
+var SALES_CALENDAR_SCHEMA = "elnora-luma/report-sales-calendar@1";
+var ROSTER_SCHEMA = "elnora-luma/roster@1";
+function normalizeEmail(value) {
+  return typeof value === "string" ? value.trim().toLowerCase() : "";
+}
+var str = (v) => typeof v === "string" ? v : "";
+function currencyKey(c) {
+  const s = str(c).trim().toLowerCase();
+  return s === "" ? "unknown" : s;
+}
+function extractEntries(resp) {
+  if (Array.isArray(resp)) return resp;
+  const entries = resp?.entries;
+  if (Array.isArray(entries)) return entries;
+  return [];
+}
+function answersLookup(raw, field) {
+  const answers = raw.registration_answers;
+  if (!Array.isArray(answers)) return "";
+  for (const a of answers) {
+    const v = a?.[field];
+    if (typeof v === "string" && v.trim() !== "") return v.trim();
+  }
+  return "";
+}
+function normalizeGuest(entry) {
+  const nested = entry.guest;
+  const raw = { ...typeof nested === "object" && nested !== null ? nested : {}, ...entry };
+  const ticketsRaw = Array.isArray(raw.event_tickets) ? raw.event_tickets : raw.event_ticket && typeof raw.event_ticket === "object" ? [raw.event_ticket] : [];
+  const buckets = /* @__PURE__ */ new Map();
+  let capturedTickets = 0;
+  let uncapturedCents = 0;
+  for (const t of ticketsRaw) {
+    const amount = typeof t.amount === "number" ? t.amount : 0;
+    if (amount <= 0) continue;
+    if (t.is_captured) {
+      const key = currencyKey(t.currency);
+      const b = buckets.get(key) ?? { currency: key, gross_cents: 0, discount_cents: 0, tax_cents: 0, tickets: 0 };
+      b.gross_cents += amount;
+      b.discount_cents += typeof t.amount_discount === "number" ? t.amount_discount : 0;
+      b.tax_cents += typeof t.amount_tax === "number" ? t.amount_tax : 0;
+      b.tickets += 1;
+      buckets.set(key, b);
+      capturedTickets += 1;
+    } else {
+      uncapturedCents += amount;
+    }
+  }
+  const payment = capturedTickets > 0 ? "paid" : uncapturedCents > 0 ? "uncaptured" : "free";
+  const orders = Array.isArray(raw.event_ticket_orders) ? raw.event_ticket_orders : [];
+  const couponCodes = Array.from(
+    new Set(orders.map((o) => str(o?.coupon_info?.code).trim()).filter((c) => c !== ""))
+  ).sort();
+  const email = normalizeEmail(raw.email ?? raw.user_email);
+  const apiId = str(raw.api_id ?? raw.id);
+  const captured = Array.from(buckets.values()).sort((a, b) => a.currency.localeCompare(b.currency));
+  const primaryTicket = ticketsRaw.find((t) => t.is_captured && (t.amount ?? 0) > 0) ?? ticketsRaw[0];
+  return {
+    key: email !== "" ? email : apiId,
+    guest_api_id: apiId,
+    email,
+    name: str(raw.name ?? raw.user_name),
+    first_name: str(raw.first_name ?? raw.user_first_name),
+    last_name: str(raw.last_name ?? raw.user_last_name),
+    company: answersLookup(raw, "answer_company"),
+    job_title: answersLookup(raw, "answer_job_title"),
+    approval_status: str(raw.approval_status),
+    payment,
+    captured,
+    uncaptured_cents: uncapturedCents,
+    ticket_type_ids: Array.from(new Set(ticketsRaw.map((t) => str(t.event_ticket_type_id)).filter((s) => s !== ""))).sort(),
+    ticket_type_counts: ticketsRaw.reduce((acc, t) => {
+      const id = str(t.event_ticket_type_id);
+      if (id !== "") acc[id] = (acc[id] ?? 0) + 1;
+      return acc;
+    }, {}),
+    primary_ticket_type_id: str(primaryTicket?.event_ticket_type_id),
+    ticket_type: str(primaryTicket?.name),
+    coupon_codes: couponCodes,
+    registered_at: str(raw.registered_at),
+    checked_in_at: str(raw.checked_in_at),
+    utm_source: str(raw.utm_source),
+    custom_source: str(raw.custom_source)
+  };
+}
+function normalizeGuests(resp) {
+  return extractEntries(resp).map(normalizeGuest).sort((a, b) => a.key.localeCompare(b.key) || a.guest_api_id.localeCompare(b.guest_api_id));
+}
+function normalizeEventInfo(resp) {
+  const outer = resp ?? {};
+  const ev = typeof outer.event === "object" && outer.event !== null ? outer.event : outer;
+  return {
+    id: str(ev.api_id ?? ev.id),
+    name: str(ev.name),
+    start_at: str(ev.start_at),
+    end_at: str(ev.end_at),
+    timezone: str(ev.timezone)
+  };
+}
+function normalizeTicketTypes(resp) {
+  const outer = resp ?? {};
+  const list = Array.isArray(outer.ticket_types) ? outer.ticket_types : extractEntries(resp);
+  return list.map((tt) => ({
+    id: str(tt.api_id ?? tt.id),
+    name: str(tt.name),
+    type: str(tt.type),
+    price_cents: typeof tt.cents === "number" ? tt.cents : null,
+    currency: currencyKey(tt.currency),
+    is_hidden: tt.is_hidden === true,
+    max_capacity: typeof tt.max_capacity === "number" ? tt.max_capacity : null
+  })).sort((a, b) => a.name.localeCompare(b.name) || a.id.localeCompare(b.id));
+}
+function sortedCountMap(values) {
+  const counts = /* @__PURE__ */ new Map();
+  for (const v of values) counts.set(v || "unknown", (counts.get(v || "unknown") ?? 0) + 1);
+  const out = {};
+  for (const k of Array.from(counts.keys()).sort()) out[k] = counts.get(k);
+  return out;
+}
+function couponUsage(entries) {
+  const usage = /* @__PURE__ */ new Map();
+  for (const entry of entries) {
+    const nested = entry.guest;
+    const raw = { ...typeof nested === "object" && nested !== null ? nested : {}, ...entry };
+    const orders = Array.isArray(raw.event_ticket_orders) ? raw.event_ticket_orders : [];
+    for (const o of orders) {
+      const code = str(o?.coupon_info?.code).trim();
+      if (code === "") continue;
+      const key = `${code.toLowerCase()}|${currencyKey(o.currency)}`;
+      const u = usage.get(key) ?? { code, uses: 0, captured_uses: 0, discount_cents: 0, currency: currencyKey(o.currency) };
+      u.uses += 1;
+      if (o.is_captured) {
+        u.captured_uses += 1;
+        u.discount_cents += typeof o.amount_discount === "number" ? o.amount_discount : 0;
+      }
+      usage.set(key, u);
+    }
+  }
+  return Array.from(usage.values()).sort((a, b) => a.code.localeCompare(b.code) || a.currency.localeCompare(b.currency));
+}
+function buildSalesSummary(event, ticketTypes, guests, rawGuestEntries) {
+  const revenue = /* @__PURE__ */ new Map();
+  for (const g of guests) {
+    for (const b of g.captured) {
+      const agg = revenue.get(b.currency) ?? { currency: b.currency, gross_cents: 0, discount_cents: 0, tax_cents: 0, tickets: 0 };
+      agg.gross_cents += b.gross_cents;
+      agg.discount_cents += b.discount_cents;
+      agg.tax_cents += b.tax_cents;
+      agg.tickets += b.tickets;
+      revenue.set(b.currency, agg);
+    }
+  }
+  const pending = guests.filter((g) => g.approval_status === "pending_approval");
+  const oldestPending = pending.map((g) => g.registered_at).filter((s) => s !== "").sort()[0] ?? "";
+  const holding = guests.filter((g) => g.approval_status !== "declined");
+  const soldByType = /* @__PURE__ */ new Map();
+  for (const g of holding) {
+    for (const [id, n] of Object.entries(g.ticket_type_counts)) {
+      const s = soldByType.get(id) ?? { sold: 0, captured: 0, gross: /* @__PURE__ */ new Map() };
+      s.sold += n;
+      soldByType.set(id, s);
+    }
+    if (g.payment === "paid") {
+      const id = g.primary_ticket_type_id !== "" ? g.primary_ticket_type_id : g.ticket_type_ids[0];
+      if (id !== void 0 && id !== "") {
+        const s = soldByType.get(id) ?? { sold: 0, captured: 0, gross: /* @__PURE__ */ new Map() };
+        s.captured += 1;
+        for (const b of g.captured) s.gross.set(b.currency, (s.gross.get(b.currency) ?? 0) + b.gross_cents);
+        soldByType.set(id, s);
+      }
+    }
+  }
+  const knownIds = new Set(ticketTypes.map((t) => t.id));
+  const phantomTypes = Array.from(soldByType.keys()).filter((id) => !knownIds.has(id)).sort().map((id) => ({ id, name: "(unknown ticket type)", type: "", price_cents: null, currency: "unknown", is_hidden: false, max_capacity: null }));
+  const ticketTypeSales = [...ticketTypes, ...phantomTypes].map((tt) => {
+    const s = soldByType.get(tt.id) ?? { sold: 0, captured: 0, gross: /* @__PURE__ */ new Map() };
+    return {
+      ...tt,
+      sold: s.sold,
+      captured: s.captured,
+      captured_gross: Array.from(s.gross.entries()).map(([currency, cents]) => ({ currency, cents })).sort((a, b) => a.currency.localeCompare(b.currency)),
+      capacity_pct: tt.max_capacity !== null && tt.max_capacity > 0 ? Math.round(s.sold / tt.max_capacity * 100) : null
+    };
+  });
+  return {
+    schema: SALES_SCHEMA,
+    event,
+    guests: {
+      total: guests.length,
+      by_approval_status: sortedCountMap(guests.map((g) => g.approval_status)),
+      by_payment: {
+        paid: guests.filter((g) => g.payment === "paid").length,
+        uncaptured: guests.filter((g) => g.payment === "uncaptured").length,
+        free: guests.filter((g) => g.payment === "free").length
+      },
+      checked_in: guests.filter((g) => g.checked_in_at !== "").length,
+      pending_approval: { count: pending.length, oldest_registered_at: oldestPending }
+    },
+    revenue: Array.from(revenue.values()).sort((a, b) => a.currency.localeCompare(b.currency)),
+    ticket_types: ticketTypeSales,
+    coupons: couponUsage(rawGuestEntries)
+  };
+}
+function formatCents(cents) {
+  const sign = cents < 0 ? "-" : "";
+  const abs = Math.abs(cents);
+  return `${sign}${Math.trunc(abs / 100)}.${String(abs % 100).padStart(2, "0")}`;
+}
+function buildRosterRows(guests) {
+  const rows = [];
+  for (const g of guests) {
+    const buckets = g.captured.length > 0 ? g.captured : [{ currency: "", gross_cents: 0, discount_cents: 0, tax_cents: 0, tickets: 0 }];
+    for (const b of buckets) {
+      rows.push({
+        key: g.key,
+        guest_api_id: g.guest_api_id,
+        email: g.email,
+        name: g.name,
+        first_name: g.first_name,
+        last_name: g.last_name,
+        company: g.company,
+        job_title: g.job_title,
+        approval_status: g.approval_status,
+        payment: g.payment,
+        amount_cents: b.gross_cents,
+        amount: formatCents(b.gross_cents),
+        amount_discount_cents: b.discount_cents,
+        amount_tax_cents: b.tax_cents,
+        currency: b.currency,
+        ticket_type: g.ticket_type,
+        coupon_codes: g.coupon_codes.join(" "),
+        registered_at: g.registered_at,
+        checked_in_at: g.checked_in_at,
+        utm_source: g.utm_source,
+        custom_source: g.custom_source
+      });
+    }
+  }
+  return rows.sort((a, b) => a.key.localeCompare(b.key) || a.guest_api_id.localeCompare(b.guest_api_id) || a.currency.localeCompare(b.currency));
+}
+var ROSTER_COLUMNS = [
+  "name",
+  "first_name",
+  "last_name",
+  "email",
+  "company",
+  "job_title",
+  "approval_status",
+  "payment",
+  "amount_cents",
+  "amount",
+  "amount_discount_cents",
+  "amount_tax_cents",
+  "currency",
+  "ticket_type",
+  "coupon_codes",
+  "registered_at",
+  "checked_in_at",
+  "utm_source",
+  "custom_source",
+  "guest_api_id"
+];
+function computeWarnings(summary, thresholds, nowMs) {
+  const warnings = [];
+  for (const tt of summary.ticket_types) {
+    if (tt.max_capacity === null || tt.max_capacity <= 0) continue;
+    if (tt.sold >= tt.max_capacity) {
+      warnings.push({ code: "sold_out", message: `Ticket type "${tt.name}" is sold out (${tt.sold}/${tt.max_capacity}).` });
+    } else if (tt.capacity_pct !== null && tt.capacity_pct >= thresholds.capacityPct) {
+      warnings.push({ code: "near_capacity", message: `Ticket type "${tt.name}" is at ${tt.capacity_pct}% capacity (${tt.sold}/${tt.max_capacity}).` });
+    }
+  }
+  const pending = summary.guests.pending_approval;
+  if (pending.count > 0 && pending.oldest_registered_at !== "") {
+    const oldestMs = Date.parse(pending.oldest_registered_at);
+    if (Number.isFinite(oldestMs) && nowMs - oldestMs > thresholds.pendingHours * 36e5) {
+      const hours = Math.floor((nowMs - oldestMs) / 36e5);
+      warnings.push({ code: "pending_aging", message: `${pending.count} guest(s) pending approval; oldest has waited ${hours}h.` });
+    }
+  }
+  if (pending.count > 0 && summary.event.start_at !== "") {
+    const startMs = Date.parse(summary.event.start_at);
+    if (Number.isFinite(startMs) && startMs > nowMs && startMs - nowMs < thresholds.startSoonHours * 36e5) {
+      warnings.push({ code: "pending_before_start", message: `Event starts within ${thresholds.startSoonHours}h with ${pending.count} approval(s) outstanding.` });
+    }
+  }
+  return warnings;
+}
+function money(cents, currency) {
+  return `${formatCents(cents)} ${currency === "" || currency === "unknown" ? "?" : currency.toUpperCase()}`;
+}
+function mdSafe(value) {
+  return value.replace(/[\u0000-\u001f\u007f]+/g, " ").replace(/\|/g, "\\|").trim();
+}
+function renderSalesMd(s) {
+  const lines = [];
+  lines.push(`# Sales report \u2014 ${mdSafe(s.event.name || s.event.id)}`);
+  lines.push("");
+  lines.push(`Event \`${s.event.id}\` \xB7 starts ${s.event.start_at || "?"} (${s.event.timezone || "tz unknown"})`);
+  lines.push("");
+  const rev = s.revenue.length > 0 ? s.revenue.map((b) => `${money(b.gross_cents, b.currency)} gross (${b.tickets} tickets, discounts ${money(b.discount_cents, b.currency)}, tax ${money(b.tax_cents, b.currency)})`).join("; ") : "no captured revenue";
+  lines.push(`**Captured revenue:** ${rev}`);
+  const g = s.guests;
+  lines.push(`**Guests:** ${g.total} total \u2014 ${g.by_payment.paid} paid, ${g.by_payment.free} free/comp, ${g.by_payment.uncaptured} uncaptured checkout; ${g.checked_in} checked in`);
+  const statuses = Object.entries(g.by_approval_status).map(([k, v]) => `${k}: ${v}`).join(", ");
+  lines.push(`**Approval status:** ${statuses || "none"}`);
+  if (g.pending_approval.count > 0) {
+    lines.push(`**Approval queue:** ${g.pending_approval.count} pending (oldest ${g.pending_approval.oldest_registered_at || "?"})`);
+  }
+  if (s.ticket_types.length > 0) {
+    lines.push("");
+    lines.push("| Ticket type | Sold | Captured | Revenue | Capacity |");
+    lines.push("|---|---|---|---|---|");
+    for (const tt of s.ticket_types) {
+      const revs = tt.captured_gross.map((x) => money(x.cents, x.currency)).join("; ") || "\u2014";
+      const cap = tt.max_capacity !== null ? `${tt.sold}/${tt.max_capacity}${tt.capacity_pct !== null ? ` (${tt.capacity_pct}%)` : ""}` : "\u2014";
+      lines.push(`| ${mdSafe(tt.name)}${tt.is_hidden ? " (hidden)" : ""} | ${tt.sold} | ${tt.captured} | ${revs} | ${cap} |`);
+    }
+  }
+  if (s.coupons.length > 0) {
+    lines.push("");
+    lines.push("| Coupon | Uses | Captured uses | Discount given |");
+    lines.push("|---|---|---|---|");
+    for (const c of s.coupons) {
+      lines.push(`| ${mdSafe(c.code)} | ${c.uses} | ${c.captured_uses} | ${money(c.discount_cents, c.currency)} |`);
+    }
+  }
+  return lines.join("\n") + "\n";
+}
+function buildCalendarSales(window, events) {
+  const totals = /* @__PURE__ */ new Map();
+  for (const ev of events) {
+    for (const b of ev.revenue) {
+      const agg = totals.get(b.currency) ?? { currency: b.currency, gross_cents: 0, discount_cents: 0, tax_cents: 0, tickets: 0 };
+      agg.gross_cents += b.gross_cents;
+      agg.discount_cents += b.discount_cents;
+      agg.tax_cents += b.tax_cents;
+      agg.tickets += b.tickets;
+      totals.set(b.currency, agg);
+    }
+  }
+  const sorted = [...events].sort((a, b) => a.event.start_at.localeCompare(b.event.start_at) || a.event.id.localeCompare(b.event.id));
+  return {
+    schema: SALES_CALENDAR_SCHEMA,
+    window,
+    events: sorted,
+    totals: Array.from(totals.values()).sort((a, b) => a.currency.localeCompare(b.currency))
+  };
+}
+function renderCalendarSalesMd(c) {
+  const lines = [];
+  lines.push(`# Calendar sales report`);
+  lines.push("");
+  lines.push(`Window: ${c.window.after || "(beginning)"} \u2192 ${c.window.before || "(now)"} \xB7 ${c.events.length} event(s)`);
+  lines.push("");
+  lines.push("| Event | Starts | Paid | Free | Revenue |");
+  lines.push("|---|---|---|---|---|");
+  for (const ev of c.events) {
+    const rev = ev.revenue.map((b) => money(b.gross_cents, b.currency)).join("; ") || "\u2014";
+    lines.push(`| ${mdSafe(ev.event.name || ev.event.id)} | ${ev.event.start_at || "?"} | ${ev.guests.by_payment.paid} | ${ev.guests.by_payment.free} | ${rev} |`);
+  }
+  lines.push("");
+  const totals = c.totals.map((b) => `${money(b.gross_cents, b.currency)} gross (${b.tickets} tickets)`).join("; ") || "no captured revenue";
+  lines.push(`**Totals:** ${totals}`);
+  return lines.join("\n") + "\n";
+}
+
+// src/diff.ts
+var DIFF_SCHEMA = "elnora-luma/report-diff@1";
+var DIFF_FIELDS = [
+  "approval_status",
+  "payment",
+  "amount_cents",
+  "currency",
+  "ticket_type",
+  "coupon_codes",
+  "checked_in_at"
+];
+function parseRosterDocument(raw, label) {
+  const doc = raw;
+  if (!doc || typeof doc !== "object" || typeof doc.schema !== "string" || !doc.schema.startsWith("elnora-luma/roster@")) {
+    throw new Error(
+      `${label}: not a roster document \u2014 expected JSON produced by \`report roster --format json\` (schema "${ROSTER_SCHEMA}").`
+    );
+  }
+  if (!Array.isArray(doc.rows)) throw new Error(`${label}: roster document has no rows[] array.`);
+  return {
+    schema: doc.schema,
+    event: { id: doc.event?.id ?? "", name: doc.event?.name ?? "" },
+    rows: doc.rows
+  };
+}
+var rowKey = (r) => `${r.key}|${r.currency}`;
+function diffRosters(oldDoc, newDoc) {
+  const oldMap = new Map(oldDoc.rows.map((r) => [rowKey(r), r]));
+  const newMap = new Map(newDoc.rows.map((r) => [rowKey(r), r]));
+  const added = [];
+  const changed = [];
+  for (const [key, row] of newMap) {
+    const prev = oldMap.get(key);
+    if (!prev) {
+      added.push(row);
+      continue;
+    }
+    const before = {};
+    const after = {};
+    for (const f of DIFF_FIELDS) {
+      if (prev[f] !== row[f]) {
+        before[f] = prev[f];
+        after[f] = row[f];
+      }
+    }
+    if (Object.keys(after).length > 0) {
+      changed.push({ key, email: row.email, name: row.name, before, after });
+    }
+  }
+  const removed = Array.from(oldMap.entries()).filter(([key]) => !newMap.has(key)).map(([, row]) => row);
+  const delta = /* @__PURE__ */ new Map();
+  const add = (currency, cents) => {
+    if (cents === 0) return;
+    delta.set(currency, (delta.get(currency) ?? 0) + cents);
+  };
+  for (const r of added) add(r.currency, r.amount_cents);
+  for (const r of removed) add(r.currency, -r.amount_cents);
+  for (const c of changed) {
+    if (c.after.amount_cents !== void 0) {
+      const currency = c.after.currency ?? c.before.currency ?? "";
+      add(currency, (c.after.amount_cents ?? 0) - (c.before.amount_cents ?? 0));
+    }
+  }
+  return {
+    schema: DIFF_SCHEMA,
+    event: newDoc.event,
+    added: [...added].sort((a, b) => a.key.localeCompare(b.key)),
+    removed: [...removed].sort((a, b) => a.key.localeCompare(b.key)),
+    changed: [...changed].sort((a, b) => a.key.localeCompare(b.key)),
+    summary: {
+      added: added.length,
+      removed: removed.length,
+      changed: changed.length,
+      captured_delta: Array.from(delta.entries()).map(([currency, cents]) => ({ currency, cents })).sort((a, b) => a.currency.localeCompare(b.currency))
+    }
+  };
+}
+function diffIsEmpty(d) {
+  return d.added.length === 0 && d.removed.length === 0 && d.changed.length === 0;
+}
+function renderDiffMd(d) {
+  if (diffIsEmpty(d)) return "";
+  const lines = [];
+  lines.push(`# Guest changes \u2014 ${mdSafe(d.event.name || d.event.id)}`);
+  lines.push("");
+  const deltas = d.summary.captured_delta.map((x) => money(x.cents, x.currency)).join("; ");
+  lines.push(`${d.summary.added} new, ${d.summary.removed} removed, ${d.summary.changed} changed${deltas ? ` \xB7 captured revenue delta: ${deltas}` : ""}`);
+  const describe = (r) => `${mdSafe(r.name || r.email || r.guest_api_id)}${r.email ? ` <${mdSafe(r.email)}>` : ""} \u2014 ${mdSafe(r.approval_status)}, ${r.payment}${r.amount_cents > 0 ? `, ${money(r.amount_cents, r.currency)}` : ""}`;
+  if (d.added.length > 0) {
+    lines.push("");
+    lines.push("## New");
+    for (const r of d.added) lines.push(`- ${describe(r)}`);
+  }
+  if (d.removed.length > 0) {
+    lines.push("");
+    lines.push("## Removed");
+    for (const r of d.removed) lines.push(`- ${describe(r)}`);
+  }
+  if (d.changed.length > 0) {
+    lines.push("");
+    lines.push("## Changed");
+    for (const c of d.changed) {
+      const fields = Object.keys(c.after).map((f) => `${f}: ${mdSafe(String(c.before[f] ?? "\u2205")) || "\u2205"} \u2192 ${mdSafe(String(c.after[f] ?? "\u2205")) || "\u2205"}`).join(", ");
+      lines.push(`- ${mdSafe(c.name || c.email || c.key)}: ${fields}`);
+    }
+  }
+  return lines.join("\n") + "\n";
+}
+
+// src/stripe.ts
+var STRIPE_BASE_URL = "https://api.stripe.com";
+var MAX_PAGES = 50;
+var RETRYABLE2 = /* @__PURE__ */ new Set([429, 500, 502, 503, 504]);
+var StripeApiError = class extends Error {
+  constructor(status, statusText, body, path) {
+    super(`Stripe API GET ${path} \u2192 HTTP ${status} ${statusText}`);
+    this.status = status;
+    this.statusText = statusText;
+    this.body = body;
+    this.path = path;
+  }
+  status;
+  statusText;
+  body;
+  path;
+};
+function getStripeKey() {
+  const key = process.env.STRIPE_API_KEY;
+  if (!key) {
+    throw new Error(
+      "STRIPE_API_KEY is not set. Create a RESTRICTED read-only key (rk_...) at https://dashboard.stripe.com/apikeys, then run `luma auth set-key <luma-key> --stripe-key <rk_key>` or export STRIPE_API_KEY."
+    );
+  }
+  return key;
+}
+async function callStripe(opts) {
+  const url = new URL(STRIPE_BASE_URL + opts.path);
+  if (opts.query) {
+    for (const [k, v] of Object.entries(opts.query)) {
+      if (v === void 0 || v === null || v === "") continue;
+      url.searchParams.set(k, String(v));
+    }
+  }
+  const doFetch = opts.fetchImpl ?? fetch;
+  let lastResp = null;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const resp = await doFetch(url, {
+      method: "GET",
+      headers: { authorization: `Bearer ${opts.apiKey}`, accept: "application/json" }
+    });
+    lastResp = resp;
+    if (RETRYABLE2.has(resp.status) && attempt < 2) {
+      const retryAfter = Number(resp.headers.get("retry-after") || "");
+      const backoffMs = Number.isFinite(retryAfter) && retryAfter > 0 ? Math.min(retryAfter * 1e3, 1e4) : Math.min(1e3 * 2 ** attempt, 5e3);
+      await new Promise((r) => setTimeout(r, backoffMs));
+      continue;
+    }
+    const text = await resp.text();
+    let parsed;
+    try {
+      parsed = text ? JSON.parse(text) : null;
+    } catch {
+      parsed = text;
+    }
+    if (!resp.ok) throw new StripeApiError(resp.status, resp.statusText, parsed, opts.path);
+    return parsed;
+  }
+  throw new StripeApiError(lastResp?.status ?? 0, lastResp?.statusText ?? "exhausted retries", null, opts.path);
+}
+async function listCharges(apiKey, sinceUnix, fetchImpl) {
+  const charges = [];
+  let startingAfter;
+  for (let page = 0; page < MAX_PAGES; page++) {
+    const resp = await callStripe({
+      apiKey,
+      path: "/v1/charges",
+      query: { limit: 100, "created[gte]": sinceUnix, starting_after: startingAfter },
+      fetchImpl
+    });
+    const data = Array.isArray(resp?.data) ? resp.data : [];
+    charges.push(...data);
+    if (!resp?.has_more || data.length === 0) return { charges, truncated: false };
+    startingAfter = data[data.length - 1].id;
+  }
+  return { charges, truncated: true };
+}
+function chargeEmail(c) {
+  return normalizeEmail(c.metadata?.email) || normalizeEmail(c.receipt_email) || normalizeEmail(c.billing_details?.email);
+}
+function isLumaCharge(c) {
+  return typeof c.metadata?.luma_payment_started_api_id === "string" && c.metadata.luma_payment_started_api_id !== "";
+}
+var RECONCILE_SCHEMA = "elnora-luma/stripe-reconcile@1";
+function reconcile(event, guests, charges, sinceUnix, truncated) {
+  const lumaCharges = charges.filter((c) => isLumaCharge(c) && c.status === "succeeded");
+  const chargesByKey = /* @__PURE__ */ new Map();
+  for (const c of lumaCharges) {
+    const email = chargeEmail(c);
+    if (email === "") continue;
+    const key = `${email}|${(c.currency || "unknown").toLowerCase()}`;
+    const agg = chargesByKey.get(key) ?? { cents: 0, refunded: 0, ids: [] };
+    agg.cents += c.amount;
+    agg.refunded += c.amount_refunded ?? 0;
+    agg.ids.push(c.id);
+    chargesByKey.set(key, agg);
+  }
+  const lumaByKey = /* @__PURE__ */ new Map();
+  let unmatchable = 0;
+  for (const g of guests) {
+    if (g.payment !== "paid") continue;
+    if (g.email === "") {
+      unmatchable += 1;
+      continue;
+    }
+    for (const b of g.captured) {
+      const key = `${g.email}|${b.currency}`;
+      const agg = lumaByKey.get(key) ?? { email: g.email, currency: b.currency, cents: 0, names: [] };
+      agg.cents += b.gross_cents;
+      if (g.name !== "" && !agg.names.includes(g.name)) agg.names.push(g.name);
+      lumaByKey.set(key, agg);
+    }
+  }
+  const matched = [];
+  const noCharge = [];
+  const matchedKeys = /* @__PURE__ */ new Set();
+  for (const [key, l] of lumaByKey) {
+    const agg = chargesByKey.get(key);
+    if (agg) {
+      matchedKeys.add(key);
+      matched.push({
+        email: l.email,
+        name: l.names.join(", "),
+        currency: l.currency,
+        luma_cents: l.cents,
+        stripe_cents: agg.cents,
+        stripe_refunded_cents: agg.refunded,
+        charge_ids: [...agg.ids].sort(),
+        amount_mismatch: agg.cents !== l.cents
+      });
+    } else {
+      noCharge.push({ email: l.email, name: l.names.join(", "), currency: l.currency, luma_cents: l.cents });
+    }
+  }
+  const orphans = Array.from(chargesByKey.entries()).filter(([key]) => !matchedKeys.has(key)).map(([key, agg]) => ({
+    email: key.slice(0, key.lastIndexOf("|")),
+    charge_id: agg.ids.sort().join(" "),
+    currency: key.slice(key.lastIndexOf("|") + 1),
+    cents: agg.cents,
+    refunded_cents: agg.refunded
+  }));
+  const totals = /* @__PURE__ */ new Map();
+  const bump = (currency, field, cents) => {
+    const t = totals.get(currency) ?? { luma: 0, stripe: 0, refunded: 0 };
+    t[field] += cents;
+    totals.set(currency, t);
+  };
+  for (const g of guests) {
+    if (g.payment !== "paid") continue;
+    for (const b of g.captured) bump(b.currency, "luma", b.gross_cents);
+  }
+  for (const c of lumaCharges) {
+    bump((c.currency || "unknown").toLowerCase(), "stripe", c.amount);
+    bump((c.currency || "unknown").toLowerCase(), "refunded", c.amount_refunded ?? 0);
+  }
+  const byKey = (a, b) => a.email.localeCompare(b.email) || a.currency.localeCompare(b.currency);
+  return {
+    schema: RECONCILE_SCHEMA,
+    event,
+    since_unix: sinceUnix,
+    matched: matched.sort(byKey),
+    luma_paid_no_charge: noCharge.sort(byKey),
+    charge_no_guest: orphans.sort(byKey),
+    unmatchable_guests: unmatchable,
+    totals: Array.from(totals.entries()).map(([currency, t]) => ({
+      currency,
+      luma_captured_cents: t.luma,
+      stripe_charged_cents: t.stripe,
+      stripe_refunded_cents: t.refunded
+    })).sort((a, b) => a.currency.localeCompare(b.currency)),
+    charges_scanned: charges.length,
+    luma_charges: lumaCharges.length,
+    truncated
+  };
+}
+function reconcileHasAnomalies(r) {
+  return r.luma_paid_no_charge.length > 0 || r.charge_no_guest.length > 0 || r.matched.some((m) => m.amount_mismatch || m.stripe_refunded_cents > 0) || r.truncated;
+}
+function renderReconcileMd(r) {
+  const lines = [];
+  lines.push(`# Stripe reconciliation \u2014 ${mdSafe(r.event.name || r.event.id)}`);
+  lines.push("");
+  lines.push(
+    `Scanned ${r.charges_scanned} charge(s) since unix ${r.since_unix}; ${r.luma_charges} Luma-originated. ${r.matched.length} matched, ${r.luma_paid_no_charge.length} paid guest(s) without a charge, ${r.charge_no_guest.length} charge(s) without a guest.` + (r.unmatchable_guests > 0 ? ` ${r.unmatchable_guests} paid guest(s) had no email to match on.` : "") + (r.truncated ? " \u26A0 charge listing hit the page cap \u2014 results are INCOMPLETE, narrow with --since." : "")
+  );
+  lines.push("");
+  for (const t of r.totals) {
+    lines.push(
+      `- ${t.currency.toUpperCase()}: Luma captured ${money(t.luma_captured_cents, t.currency)} vs Stripe charged ${money(t.stripe_charged_cents, t.currency)}` + (t.stripe_refunded_cents > 0 ? ` (refunded ${money(t.stripe_refunded_cents, t.currency)})` : "")
+    );
+  }
+  const mismatches = r.matched.filter((m) => m.amount_mismatch || m.stripe_refunded_cents > 0);
+  if (mismatches.length > 0) {
+    lines.push("");
+    lines.push("## Matched with anomalies");
+    for (const m of mismatches) {
+      const bits = [];
+      if (m.amount_mismatch) bits.push(`Luma ${money(m.luma_cents, m.currency)} \u2260 Stripe ${money(m.stripe_cents, m.currency)}`);
+      if (m.stripe_refunded_cents > 0) bits.push(`refunded ${money(m.stripe_refunded_cents, m.currency)} on Stripe`);
+      lines.push(`- ${mdSafe(m.email)} (${m.charge_ids.map(mdSafe).join(", ")}): ${bits.join("; ")}`);
+    }
+  }
+  if (r.luma_paid_no_charge.length > 0) {
+    lines.push("");
+    lines.push("## Paid on Luma, no Stripe charge found");
+    for (const g of r.luma_paid_no_charge) lines.push(`- ${mdSafe(g.name || g.email)} <${mdSafe(g.email)}> \u2014 ${money(g.luma_cents, g.currency)}`);
+  }
+  if (r.charge_no_guest.length > 0) {
+    lines.push("");
+    lines.push("## Luma charges with no matching paid guest (possibly other events)");
+    for (const c of r.charge_no_guest) lines.push(`- ${mdSafe(c.email) || "(no email)"} \u2014 ${money(c.cents, c.currency)} (${mdSafe(c.charge_id)})`);
+  }
+  return lines.join("\n") + "\n";
+}
+
+// src/report.ts
+var EXIT_WARNINGS = 3;
+function writeOut(path, content) {
+  const tmp = join3(dirname3(path), `.${process.pid}-${Math.random().toString(36).slice(2)}.tmp`);
+  writeFileSync3(tmp, content, "utf8");
+  renameSync(tmp, path);
+}
+function emit(content, out) {
+  if (out) {
+    writeOut(out, content);
+    if (process.stderr.isTTY) process.stderr.write(`Wrote ${out}
+`);
+  } else if (content !== "") {
+    process.stdout.write(content);
+  }
+}
+function jsonText(value) {
+  return JSON.stringify(value, null, 2) + "\n";
+}
+async function fetchAllEntries(apiKey, path, query) {
+  const entries = [];
+  let cursor;
+  let pages = 0;
+  do {
+    const q = {};
+    for (const [k, v] of Object.entries(query)) if (v !== void 0) q[k] = v;
+    if (cursor) q.pagination_cursor = cursor;
+    const resp = await callLuma({ apiKey, method: "GET", path, query: q });
+    if (Array.isArray(resp)) return resp;
+    entries.push(...extractEntries(resp));
+    cursor = resp?.has_more ? resp.next_cursor : void 0;
+    pages += 1;
+    if (pages > 1e3) throw new Error("Pagination safety stop after 1000 pages");
+  } while (cursor);
+  return entries;
+}
+async function fetchEventSales(apiKey, eventId) {
+  const eventResp = await callLuma({ apiKey, method: "GET", path: "/v1/event/get", query: { id: eventId } });
+  const event = normalizeEventInfo(eventResp);
+  if (event.id === "") event.id = eventId;
+  const ticketTypesResp = await callLuma({
+    apiKey,
+    method: "GET",
+    path: "/v1/event/ticket-types/list",
+    query: { event_id: eventId, include_hidden: "true" }
+  });
+  const rawEntries = await fetchAllEntries(apiKey, "/v1/event/get-guests", { event_id: eventId });
+  const guests = normalizeGuests(rawEntries);
+  return { summary: buildSalesSummary(event, normalizeTicketTypes(ticketTypesResp), guests, rawEntries), rawEntries };
+}
+function pickFormat(opts, allowed, fallback) {
+  const f = (opts.format ?? fallback).toLowerCase();
+  if (!allowed.includes(f)) throw new Error(`--format must be one of: ${allowed.join(", ")}`);
+  return f;
+}
+function registerReportCommands(program2) {
+  const report = program2.command("report").description("Read-only reporting for accounting and unattended automation: sales, roster, diff, check");
+  report.command("sales").description("Revenue summary: per-currency captured totals, paid/free/uncaptured counts, ticket-type sales + capacity, coupon usage").option("--event-id <evt>", "Event API ID, e.g. evt-XXXX").option("--calendar", "All events on the calendar instead of one event (serial fetch, rate-limit aware)").option("--after <iso>", "Calendar mode: only events starting at/after this ISO timestamp").option("--before <iso>", "Calendar mode: only events starting before this ISO timestamp").option("--format <fmt>", "json (default, machine) | md (human digest)").option("--out <file>", "Write atomically to a file instead of stdout").addHelpText("after", "\nRead-only. Amounts are integer cents as reported by Luma, bucketed per currency (never summed across currencies).\n").action(async (opts) => {
+    const apiKey = getApiKey();
+    const format = pickFormat(opts, ["json", "md"], "json");
+    if (!opts.calendar) {
+      if (!opts.eventId) throw new Error("Pass --event-id evt-XXXX, or --calendar for all events.");
+      const { summary } = await fetchEventSales(apiKey, opts.eventId);
+      emit(format === "md" ? renderSalesMd(summary) : jsonText(summary), opts.out);
+      return;
+    }
+    const eventEntries = await fetchAllEntries(apiKey, "/v1/calendar/list-events", {
+      after: opts.after,
+      before: opts.before
+    });
+    const summaries = [];
+    for (const entry of eventEntries) {
+      const info = normalizeEventInfo(entry);
+      if (info.id === "") continue;
+      const { summary } = await fetchEventSales(apiKey, info.id);
+      summaries.push(summary);
+    }
+    const calendar = buildCalendarSales({ after: opts.after ?? "", before: opts.before ?? "" }, summaries);
+    emit(format === "md" ? renderCalendarSalesMd(calendar) : jsonText(calendar), opts.out);
+  });
+  report.command("roster").description("Flat per-guest rows for accounting/CRM import (stable columns, deterministic order)").requiredOption("--event-id <evt>", "Event API ID, e.g. evt-XXXX").option("--status <status>", "Server-side approval_status filter: approved|invited|pending_approval|declined|waitlist|session").option("--paid-only", "Only guests with captured payments (is_captured && amount > 0)").option("--format <fmt>", "csv (default) | json (the input format for `report diff`)").option("--out <file>", "Write atomically to a file instead of stdout").action(async (opts) => {
+    const apiKey = getApiKey();
+    const format = pickFormat(opts, ["csv", "json"], "csv");
+    const eventResp = await callLuma({ apiKey, method: "GET", path: "/v1/event/get", query: { id: opts.eventId } });
+    const event = normalizeEventInfo(eventResp);
+    if (event.id === "") event.id = opts.eventId;
+    const rawEntries = await fetchAllEntries(apiKey, "/v1/event/get-guests", {
+      event_id: opts.eventId,
+      approval_status: opts.status
+    });
+    let rows = buildRosterRows(normalizeGuests(rawEntries));
+    if (opts.paidOnly) rows = rows.filter((r) => r.payment === "paid");
+    if (format === "json") {
+      emit(jsonText({ schema: ROSTER_SCHEMA, event: { id: event.id, name: event.name }, rows }), opts.out);
+    } else {
+      emit(toCsv(ROSTER_COLUMNS, rows.map((r) => ROSTER_COLUMNS.map((c) => r[c]))), opts.out);
+    }
+  });
+  report.command("diff").description("Change digest between two roster JSON files (no API calls, no state kept by the CLI)").argument("<old.json>", "Earlier `report roster --format json` output").argument("<new.json>", "Later `report roster --format json` output").option("--format <fmt>", "md (default; prints NOTHING when unchanged \u2014 cron-mail friendly) | json").option("--out <file>", "Write atomically to a file instead of stdout").addHelpText(
+    "after",
+    "\nTypical scheduled use:\n  luma report roster --event-id evt-X --format json --out today.json\n  luma report diff yesterday.json today.json --format md | your-mail-command\n  mv today.json yesterday.json\n"
+  ).action(async (oldPath, newPath, opts) => {
+    const format = pickFormat(opts, ["md", "json"], "md");
+    const oldDoc = parseRosterDocument(JSON.parse(readFileSync6(oldPath, "utf8")), oldPath);
+    const newDoc = parseRosterDocument(JSON.parse(readFileSync6(newPath, "utf8")), newPath);
+    const diff = diffRosters(oldDoc, newDoc);
+    if (format === "json") {
+      emit(jsonText(diff), opts.out);
+    } else {
+      emit(renderDiffMd(diff), opts.out);
+      if (diffIsEmpty(diff) && process.stderr.isTTY) process.stderr.write("No changes.\n");
+    }
+  });
+  report.command("check").description("Automation health check: capacity/sellout + approval-queue aging warnings. Exit 0 = clear, 3 = warnings").requiredOption("--event-id <evt>", "Event API ID, e.g. evt-XXXX").option("--warn-capacity-pct <n>", "Warn when a ticket type reaches this % of max_capacity", "90").option("--warn-pending-hours <n>", "Warn when the oldest pending approval is older than this many hours", "24").option("--format <fmt>", "md (default) | json").option("--out <file>", "Write atomically to a file instead of stdout").action(async (opts) => {
+    const apiKey = getApiKey();
+    const format = pickFormat(opts, ["md", "json"], "md");
+    const { summary } = await fetchEventSales(apiKey, opts.eventId);
+    const warnings = computeWarnings(
+      summary,
+      {
+        capacityPct: Number(opts.warnCapacityPct),
+        pendingHours: Number(opts.warnPendingHours),
+        startSoonHours: 48
+      },
+      Date.now()
+    );
+    if (format === "json") {
+      emit(jsonText({ schema: "elnora-luma/report-check@1", event: summary.event, warnings }), opts.out);
+    } else if (warnings.length > 0) {
+      emit(warnings.map((w) => `\u26A0 [${w.code}] ${w.message}`).join("\n") + "\n", opts.out);
+    } else {
+      emit("", opts.out);
+      if (process.stderr.isTTY) process.stderr.write(`OK \u2014 no warnings for ${summary.event.name || summary.event.id}.
+`);
+    }
+    if (warnings.length > 0) process.exitCode = EXIT_WARNINGS;
+  });
+}
+function registerStripeCommands(program2) {
+  const stripe = program2.command("stripe").description("Read-only Stripe cross-checks (organizer's own Stripe account; needs STRIPE_API_KEY, use a restricted rk_ key)");
+  stripe.command("reconcile").description("Match this event's Luma paid guests against Luma-originated charges in your Stripe account (email-keyed, read-only)").requiredOption("--event-id <evt>", "Event API ID, e.g. evt-XXXX").option("--since <iso>", "Only scan Stripe charges created at/after this ISO timestamp (default: the event's created_at)").option("--check", "Exit 3 when anomalies are found (unmatched guests/charges, amount mismatches, refunds, truncation)").option("--format <fmt>", "md (default) | json").option("--out <file>", "Write atomically to a file instead of stdout").addHelpText(
+    "after",
+    "\nLuma stamps `metadata.luma_payment_started_api_id` on charges it creates in your connected Stripe account (observed, undocumented). Charges are account-wide: an unmatched charge may belong to another event \u2014 narrow with --since. Matching is by email only.\n"
+  ).action(async (opts) => {
+    const apiKey = getApiKey();
+    const stripeKey = getStripeKey();
+    const format = pickFormat(opts, ["md", "json"], "md");
+    const eventResp = await callLuma({ apiKey, method: "GET", path: "/v1/event/get", query: { id: opts.eventId } });
+    const outer = eventResp ?? {};
+    const ev = typeof outer.event === "object" && outer.event !== null ? outer.event : outer;
+    const event = normalizeEventInfo(eventResp);
+    if (event.id === "") event.id = opts.eventId;
+    let sinceIso = opts.since ?? (typeof ev.created_at === "string" ? ev.created_at : "");
+    if (sinceIso === "" && event.start_at !== "") {
+      const startMs = Date.parse(event.start_at);
+      if (Number.isFinite(startMs)) sinceIso = new Date(startMs - 90 * 24 * 36e5).toISOString();
+    }
+    const sinceMs = Date.parse(sinceIso);
+    if (!Number.isFinite(sinceMs)) {
+      throw new Error("Could not derive a charge window \u2014 pass --since <iso>, e.g. --since 2030-01-01T00:00:00Z");
+    }
+    const sinceUnix = Math.floor(sinceMs / 1e3);
+    const rawEntries = await fetchAllEntries(apiKey, "/v1/event/get-guests", { event_id: opts.eventId });
+    const guests = normalizeGuests(rawEntries);
+    const { charges, truncated } = await listCharges(stripeKey, sinceUnix);
+    const reportDoc = reconcile({ id: event.id, name: event.name }, guests, charges, sinceUnix, truncated);
+    emit(format === "json" ? jsonText(reportDoc) : renderReconcileMd(reportDoc), opts.out);
+    if (opts.check && reconcileHasAnomalies(reportDoc)) process.exitCode = EXIT_WARNINGS;
+  });
+}
+
 // src/main.ts
-var __dirname = dirname3(fileURLToPath3(import.meta.url));
+var __dirname = dirname4(fileURLToPath3(import.meta.url));
 var SPEC_PATH = resolve3(__dirname, "spec", "openapi.json");
 var SRC_SPEC_PATH = resolve3(__dirname, "..", "src", "spec", "openapi.json");
 var PKG_PATH2 = resolve3(__dirname, "..", "package.json");
-var pkg = JSON.parse(readFileSync6(PKG_PATH2, "utf8"));
+var pkg = JSON.parse(readFileSync7(PKG_PATH2, "utf8"));
 function describeParam(p) {
   const bits = [];
   if (p.required) bits.push("(required)");
@@ -4196,6 +5096,8 @@ Resources are discovered dynamically from the bundled OpenAPI spec. Run \`luma <
     );
   });
   registerAuthCommands(program2);
+  registerReportCommands(program2);
+  registerStripeCommands(program2);
   const specGroup = program2.command("spec").description("OpenAPI spec utilities");
   specGroup.command("refresh").description("Re-download the bundled openapi.json from public-api.luma.com").action(async () => {
     await refreshSpec(SPEC_PATH);
@@ -4237,6 +5139,13 @@ Examples:
   echo '{"event_id":"evt-X","guests":[...]}' | luma event add-guests --body -
   luma webhooks list
   luma spec refresh                                 # update the bundled OpenAPI spec
+
+Automation (read-only, cron-safe \u2014 see docs/automation.md):
+  luma report sales --event-id evt-XXXX --format md   # revenue summary digest
+  luma report roster --event-id evt-XXXX --out r.csv  # accounting/CRM export
+  luma report diff yesterday.json today.json          # what changed since last run
+  luma report check --event-id evt-XXXX               # capacity/queue warnings (exit 3)
+  luma stripe reconcile --event-id evt-XXXX           # Luma paid guests vs Stripe charges
 `
   );
   await program2.parseAsync(process.argv);
