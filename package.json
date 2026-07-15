@@ -1,6 +1,6 @@
 {
   "name": "@elnora-ai/luma",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The entire Luma (lu.ma) API as a CLI and a Claude Code plugin — 61 endpoints driven by Luma's own OpenAPI spec, plus hard-won safety guardrails for guest, ticket, and email operations",
   "type": "module",
   "bin": {
