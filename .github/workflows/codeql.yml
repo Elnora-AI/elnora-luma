@@ -37,6 +37,12 @@ jobs:
         with:
           languages: javascript-typescript
           queries: security-extended
+          # dist/main.js is the committed esbuild bundle of src/ (see .gitignore).
+          # Scanning it duplicates every src/ alert against unreviewable generated
+          # code; CI already fails if dist drifts from a clean rebuild of src.
+          config: |
+            paths-ignore:
+              - dist
       - uses: github/codeql-action/autobuild@v4
       - uses: github/codeql-action/analyze@v4
         with:
