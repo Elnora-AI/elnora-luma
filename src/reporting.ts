@@ -509,12 +509,15 @@ export function money(cents: number, currency: string): string {
 }
 
 /** API-derived strings (guest/ticket/coupon/event names) rendered into markdown:
- *  collapse control chars/newlines to a space and escape `|` so a registrant-
- *  chosen name can never spoof report structure or break table cells.
+ *  collapse control chars/newlines to a space and escape `\` and `|` so a
+ *  registrant-chosen name can never spoof report structure or break table cells.
+ *  Backslash MUST be escaped in the same pass as `|`: escaping `|` alone turns
+ *  a name like `a\|b` into `a\\|b`, which markdown renders as a literal
+ *  backslash followed by a live, unescaped cell break.
  *  Deterministic, so `report diff` stability is preserved. */
 export function mdSafe(value: string): string {
   // eslint-disable-next-line no-control-regex
-  return value.replace(/[\u0000-\u001f\u007f]+/g, " ").replace(/\|/g, "\\|").trim();
+  return value.replace(/[\u0000-\u001f\u007f]+/g, " ").replace(/[\\|]/g, "\\$&").trim();
 }
 
 export function renderSalesMd(s: SalesSummary): string {

@@ -4333,7 +4333,7 @@ function money(cents, currency) {
   return `${formatCents(cents)} ${currency === "" || currency === "unknown" ? "?" : currency.toUpperCase()}`;
 }
 function mdSafe(value) {
-  return value.replace(/[\u0000-\u001f\u007f]+/g, " ").replace(/\|/g, "\\|").trim();
+  return value.replace(/[\u0000-\u001f\u007f]+/g, " ").replace(/[\\|]/g, "\\$&").trim();
 }
 function renderSalesMd(s) {
   const lines = [];

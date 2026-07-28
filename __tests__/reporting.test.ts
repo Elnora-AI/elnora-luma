@@ -244,6 +244,10 @@ describe("renderers", () => {
   it("neutralizes control chars and pipes in API-derived names (mdSafe)", () => {
     expect(mdSafe("Evil\n# Fake heading")).toBe("Evil # Fake heading");
     expect(mdSafe("cell|breaker")).toBe("cell\\|breaker");
+    // A registrant-supplied backslash must not consume our own `|` escape:
+    // `a\|b` has to stay a literal, never become a live cell break.
+    expect(mdSafe("a\\|b")).toBe("a\\\\\\|b");
+    expect(mdSafe("C:\\Users")).toBe("C:\\\\Users");
     expect(mdSafe("  padded name ")).toBe("padded name");
     const hostile = {
       ...paidGuest,
