@@ -11,7 +11,7 @@
       "name": "luma",
       "description": "Luma (lu.ma) event ops for Claude Code — all 61 public API endpoints via a spec-driven CLI, plus 9 skills with safety guardrails for guests, ticketing, calendars, and webhooks.",
       "source": "./",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "category": "productivity",
       "tags": [
         "luma",

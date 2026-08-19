@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/Elnora-AI/elnora-luma/compare/v0.1.1...v0.1.2) (2026-08-19)
+
+
+### Bug Fixes
+
+* **reporting:** escape backslashes in mdSafe (CodeQL js/incomplete-sanitization) ([#11](https://github.com/Elnora-AI/elnora-luma/issues/11)) ([dc1016b](https://github.com/Elnora-AI/elnora-luma/commit/dc1016b4326e3983a9593185a2f6124539ccc546))
+
 ## [0.1.1](https://github.com/Elnora-AI/elnora-luma/compare/v0.1.0...v0.1.1) (2026-07-15)
 
 
